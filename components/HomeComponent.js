@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { View, StatusBar,Text, Image, Dimensions, FlatList } from 'react-native';
 import { Container, Content, Button, Icon } from 'native-base';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged } from '../actions/index';
+import { fetchPosts } from '../actions/index';
 import CardComponent from './CardComponent';
-
-
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 
-export default class HomeComponent extends Component {
+class HomeComponent extends Component {
 
     static navigationOptions = {
         headerLeft:
@@ -28,6 +26,7 @@ export default class HomeComponent extends Component {
     }
 
     constructor(props) {
+        console.log('constructor')
         Text.defaultProps.allowFontScaling=true;
         super(props);
         this.state = {
@@ -37,9 +36,17 @@ export default class HomeComponent extends Component {
                 { id:3, user: {name:'ahismw',email: 'swwwe@gmail.com',profile: require('../asset/me.jpg')}, postImage:require('../asset/1.jpg'), description: 'Rendered in between each item, but not at the top or bottom.' }
             ]
         }
+        this.props.fetchPosts()
     }
 
-    _keyExtractor = (item, index) => item.id.toString();
+    componentDidUpdate() {
+        // if (this.props.isLoading) {
+            
+        // }
+        // console.log('update', this.props.posts);
+    }
+ 
+    _keyExtractor = (item, index) => index.toString();
 
     renderItems = ({item}) => {
         console.log(item);
@@ -47,10 +54,12 @@ export default class HomeComponent extends Component {
     }
 
     render() {
+        console.log('render')
         return (
             <View style={{flex: 1}}>
+                <StatusBar barStyle='light-content' />
                 <FlatList 
-                    data={this.state.datas}
+                    data={this.props.posts}
                     keyExtractor={this._keyExtractor}
                     ListHeaderComponent={() => 
                         <View style={{ height: 60, justifyContent: 'center' }}>
@@ -90,6 +99,8 @@ export default class HomeComponent extends Component {
         }
     }
 
+    _keyExtractor = (item, index) => index.toString();
+
     render() {
         return(
                 <FlatList 
@@ -97,6 +108,7 @@ export default class HomeComponent extends Component {
                     // keyExtractor={this._keyExtractor}
                     showsHorizontalScrollIndicator={false}
                     horizontal
+                    keyExtractor={this._keyExtractor}
                     renderItem={ ({item}) =>
                 <View style={{ justifyContent: 'center', padding: 5, backgroundColor: 'white' }}>
                     <Image style={{ height: 50, width: 50, borderRadius: 25, borderColor: 'black', borderWidth: 0.5 }} source={item} />
@@ -106,3 +118,10 @@ export default class HomeComponent extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    const { isLoading, posts, fetchPostError } = state.fetchPost;
+    return { isLoading, posts, fetchPostError }
+}
+
+export default connect(mapStateToProps,{ fetchPosts })(HomeComponent);

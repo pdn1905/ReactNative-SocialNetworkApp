@@ -7,22 +7,18 @@ const WIDTH_SCREEN = Dimensions.get('window').width;
 
 export default class CardComponent extends Component {
 
-
-    componentWillReceiveProps(props) {
-        
-    }
-
     render() {
         const { post } = this.props;
+            console.log(post, 'POST NAYYYYYYY~~~');
         return (
             <Card>
             <StatusBar barStyle='light-content' />
                 <CardItem style={{ flex: 1 }}>
                     <Left style={{ flex: 2.5 }}>
-                    <Thumbnail source={post.user.profile}/>
+                    <Thumbnail source={require('../asset/me.jpg')}/>
                     <Body style={{ width: 3000 }}>
-                        <Text>{post.user.name}</Text>
-                        <Text style={{ color: 'rgba(0,0,0,0.4)'}}>{post.user.email}</Text>
+                        <Text>Ngoc</Text>
+                        <Text style={{ color: 'rgba(0,0,0,0.4)'}}>ngoc@gmail.com</Text>
                     </Body>
                     </Left>
                     <Right style={{ flex: 1 }}>
@@ -30,7 +26,7 @@ export default class CardComponent extends Component {
                     </Right>
                 </CardItem>
                 <CardItem cardBody style={{ justifyContent: 'center', alignItems: 'center'}}>
-                    <Image source={post.postImage} style={{ height: 220, width: null, flex: 1}}/>
+                    <Image source={{uri: post.url}} style={{ height: 220, width: null, flex: 1}}/>
                 </CardItem>
                 <CardItem style={{ height: 45 }}>
                     <Left>
@@ -57,8 +53,8 @@ export default class CardComponent extends Component {
                     <Body>
                         <Text>
                             <Text style={{ fontSize: 14, fontWeight: 'bold'}}>
-                                {post.user.name}
-                            </Text> {post.description}
+                               ngoc@gmail.com
+                            </Text> {post.caption}
                         </Text>
                     </Body>
                 </CardItem> 
