@@ -12,7 +12,6 @@ export const fetchPosts = () => {
                 post['id'] = child.key;
                 posts.push(post);
             })
-            console.log(posts, 'SNAPSHOOOOOOT')
             fetchPostsSuccess(dispatch,posts);
         })
     };

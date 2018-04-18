@@ -89,7 +89,7 @@ const uploadImage = (username, email, imageData, dispatch) => {
       .then((url) => {
           console.log('URL', url)
           firebase.database().ref(`/users/${currentUser.uid}`)
-          .push({ username: username, email: email, profileUrl: url })
+          .set({ username: username, email: email, profileUrl: url })
           .then( () => { dispatch({ type: USER_LOGGIN_SUCCESS })})
           .catch((error) => loginUserFailed(dispatch,error))
       })
